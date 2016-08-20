@@ -30,6 +30,12 @@ UniWars\Db::setInstance(
 $instan = new \UniWars\Db;
 var_dump($instan);
 
-\UniWars\Db::getInstance()
-        ->query("INSERT INTO players (username, password) VALUES (?,?));", ['gosho', md5('1234')]);
 
+
+//\UniWars\Db::getInstance()
+//        ->query("INSERT INTO players (username, password) VALUES (?,?));", ['gosho', md5('1234')]);
+
+$player = UniWars\Repositories\PlayerRepository::create()
+        ->getOneByDetails('tdd', 1234);
+
+var_dump($player);
