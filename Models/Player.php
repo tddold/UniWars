@@ -18,5 +18,5 @@ class Player {
     private $id;
     private $username;
     private $password;
-
+    
 }
