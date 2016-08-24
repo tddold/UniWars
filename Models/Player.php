@@ -8,6 +8,8 @@
 
 namespace UniWars\Models;
 
+use UniWars\Repositories\PlayerRepository;
+
 /**
  * Description of Player
  *
@@ -19,7 +21,7 @@ class Player {
     private $username;
     private $password;
 
-    public function _construct($username, $password, $id = null) {
+    public function __construct($username, $password, $id = null) {
         $this->setId($id);
         $this->setPassword($password);
         $this->setUsername($username);
@@ -71,6 +73,14 @@ class Player {
      */
     function setPassword($password) {
         $this->password = md5($password);
+    }
+
+    /**
+     * 
+     * @return type Player
+     */
+    public function save() {
+        return PlayerRepository::create()->save($this);
     }
 
 }

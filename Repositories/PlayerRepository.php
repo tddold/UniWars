@@ -30,7 +30,7 @@ class PlayerRepository {
      */
     private static $inst = null;
 
-    private function _construct(Db $db) {
+    private function __construct(Db $db) {
         $this->db = $db;
     }
 
@@ -54,7 +54,7 @@ class PlayerRepository {
      */
     public function getOneByDetails($user, $pass) {
 
-        $query = "SELECT id, username, password"
+        $query = "SELECT id, username, password "
                 . "FROM players WHERE username = ? AND password = ?";
 
         $this->db->query($query, [$user, md5($pass)]);
@@ -75,7 +75,7 @@ class PlayerRepository {
      */
     public function getOne($id) {
 
-        $query = "SELECT id, username, password"
+        $query = "SELECT id, username, password "
                 . "FROM players WHERE id = ?";
 
         $this->db->query($query, [$id]);
@@ -86,8 +86,7 @@ class PlayerRepository {
             return false;
         }
 
-        return new Player(
-                $result['username'], $result['password'], $result['id']
+        return new Player($result['username'], $result['password'], $result['id']
         );
     }
 
@@ -97,7 +96,7 @@ class PlayerRepository {
      */
     public function getAll() {
 
-        $query = "SELECT id, username, password"
+        $query = "SELECT id, username, password "
                 . "FROM players";
 
         $this->db->query($query);
@@ -107,12 +106,24 @@ class PlayerRepository {
         $collection = [];
 
         foreach ($result as $row) {
-            $collection[] = new Player(
-                    $row['username'], $row['password'], $row['password']
+            $collection[] = new Player($row['username'], $row['password'], $row['id']
             );
         }
 
         return $collection;
+    }
+
+    public function save(Player $player) {
+        $query = "INSERT INTO players (username, password) VALUES (?,?)";
+        $params = [$player->getUsername(), $player->getPassword()];
+
+        if ($player->getId()) {
+            $query = "UPDATE players SET username = ?, password = ? WHERE id = ?";
+            $params[] = $player->getId();
+        }
+
+        $this->db->query($query, $params);
+        return $this->db->row() > 0;
     }
 
 }

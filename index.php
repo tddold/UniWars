@@ -1,16 +1,18 @@
 <?php
 
+ini_set('display_errors', 1);
 spl_autoload_register(function($className) {
-     echo $className;
+    // echo $className;
     $classPathSplitted = explode('\\', $className);
-    var_dump($classPathSplitted);
 
     $vendor = $classPathSplitted[0];
     $classPath = str_replace($vendor . "\\", "", $className);
-     var_dump($classPath);
 
     $classPath = str_replace("\\", "/", $classPath);
-     var_dump($classPath);
+    
+    if (!is_readable($classPath. '.php')) {
+        throw new \Exception();
+    }
 
     require_once $classPath . ".php";
 });
@@ -23,19 +25,40 @@ $configName = getenv('CONFIG_NAME');
 $dbConfigClass = '\\UniWars\\Configs\\'
         . $configName . '\\DbConfig';
 
-UniWars\Db::setInstance(
+\UniWars\Db::setInstance(
         $dbConfigClass::USER, $dbConfigClass::PASS, $dbConfigClass::DBNAME, $dbConfigClass::HOST
 );
 
-$instan = new \UniWars\Db;
-var_dump($instan);
+/**
+ * REQUEST_URI' => string '/UniWars/user/login' (length=19)
+  'SCRIPT_NAME' => string '/UniWars/index.php' (length=18)
+  'PHP_SELF' => string '/UniWars/index.php' (length=18)
+ */
+$scriptName = explode('/', $_SERVER['SCRIPT_NAME']);
+$requestUri = explode('/', $_SERVER['REQUEST_URI']);
+$customUri = [];
+$controllerIndex = 0;
+foreach ($scriptName as $key => $value) {
+    if ($value == 'index.php') {
+        $controllerIndex = $key;
+        break;
+    }
+}
 
+$actionIndex = $controllerIndex + 1;
 
+$controllerName = $requestUri[$controllerIndex];
+$actionName = $requestUri[$actionIndex];
 
-//\UniWars\Db::getInstance()
-//        ->query("INSERT INTO players (username, password) VALUES (?,?));", ['gosho', md5('1234')]);
+$controllerClassName = '\\Uniwars\\Controllers\\' . ucfirst($controllerName) . 'Controller';
 
-$player = UniWars\Repositories\PlayerRepository::create()
-        ->getOneByDetails('tdd', 1234);
+try {
+    $controller = new $controllerClassName();
+} catch (Exception $ex) {
+    echo 'No such controller!';
+}
 
-var_dump($player);
+if (!method_exists($controller, $actionName)) {
+    die('No sush action!');
+}
+$controller->$actionName();
