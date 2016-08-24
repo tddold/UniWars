@@ -16,7 +16,25 @@ namespace UniWars\Controllers;
 class UsersController extends Controller {
 
     public function login() {
-        echo 'login was called';
+
+        $this->view->error = FALSE;
+        $this->view->user = FALSE;
+
+        if (isset($_POST['login'])) {
+            $username = $_POST['username'];
+            $password = $_POST['password'];
+
+            $player = \UniWars\Repositories\PlayerRepository::create()
+                    ->getOneByDetails($username, $password);
+
+            if (!$player) {
+                $this->view->error = 'Invalid ditails';
+                return;
+            }
+
+            $_SESSION['userid'] = $player->getId();
+            $this->view->user = $player->getUsername();
+        }
     }
 
     public function register() {

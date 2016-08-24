@@ -14,5 +14,15 @@ namespace UniWars\Controllers;
  * @author tdd
  */
 class Controller {
-    //put your code here
+
+    /**
+     *
+     * @var type \Uniwars\View;
+     */
+    protected $view;
+
+    public function __construct(\Uniwars\View $view) {
+        $this->view = $view;
+    }
+
 }

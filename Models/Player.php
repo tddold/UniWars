@@ -37,7 +37,7 @@ class Player {
 
     /**
      * 
-     * @return type $username
+     * @return $username
      */
     function getUsername() {
         return $this->username;
@@ -45,7 +45,7 @@ class Player {
 
     /**
      * 
-     * @return type $password
+     * @return  $password
      */
     function getPassword() {
         return $this->password;
@@ -53,7 +53,7 @@ class Player {
 
     /**
      * 
-     * @param type $id
+     * @param  $id
      */
     function setId($id) {
         $this->id = $id;
@@ -61,7 +61,7 @@ class Player {
 
     /**
      * 
-     * @param type $username
+     * @param  $username
      */
     function setUsername($username) {
         $this->username = $username;

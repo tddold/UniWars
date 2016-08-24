@@ -9,8 +9,8 @@ spl_autoload_register(function($className) {
     $classPath = str_replace($vendor . "\\", "", $className);
 
     $classPath = str_replace("\\", "/", $classPath);
-    
-    if (!is_readable($classPath. '.php')) {
+
+    if (!is_readable($classPath . '.php')) {
         throw new \Exception();
     }
 
@@ -52,8 +52,10 @@ $actionName = $requestUri[$actionIndex];
 
 $controllerClassName = '\\Uniwars\\Controllers\\' . ucfirst($controllerName) . 'Controller';
 
+$view = new \UniWars\View($controllerName, $actionName);
+
 try {
-    $controller = new $controllerClassName();
+    $controller = new $controllerClassName($view);
 } catch (Exception $ex) {
     echo 'No such controller!';
 }
@@ -62,3 +64,5 @@ if (!method_exists($controller, $actionName)) {
     die('No sush action!');
 }
 $controller->$actionName();
+$view->render();
+
