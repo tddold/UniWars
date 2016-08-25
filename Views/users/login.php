@@ -1,4 +1,4 @@
-<?php if (!$this->user): ?>
+<?php if (!isset($_SESSION['userid'])): ?>
     <form action="" method="POST">
         <table border="1">
             <tr>           
@@ -22,7 +22,7 @@
                     Action
                 </td>
                 <td>
-                    <input type="submit" name="login" value="Login"/>
+                    <input type="submit" name="login" value="Login"/>                    
                 </td>
             </tr>
             <?php if ($this->error): ?> }
@@ -39,5 +39,6 @@
     </form>
 <?php else : ?>
     <h1>Welcome <?= $this->user; ?></h1>
+    <a href="<?= $this->url('users', 'logout'); ?>">Logout</a>
 <?php endif; ?>
 

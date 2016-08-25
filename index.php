@@ -1,5 +1,6 @@
 <?php
 
+session_start();
 ini_set('display_errors', 1);
 spl_autoload_register(function($className) {
     // echo $className;
@@ -54,8 +55,12 @@ $controllerClassName = '\\Uniwars\\Controllers\\' . ucfirst($controllerName) . '
 
 $view = new \UniWars\View($controllerName, $actionName);
 
+if (!$actionName) {
+    $actionName = "index";
+}
+
 try {
-    $controller = new $controllerClassName($view);
+    $controller = new $controllerClassName($view, $controllerName);
 } catch (Exception $ex) {
     echo 'No such controller!';
 }

@@ -8,6 +8,9 @@
 
 namespace UniWars\Controllers;
 
+use UniWars\Models\Player;
+use UniWars\Repositories\PlayerRepository;
+
 /**
  * Description of UsersController
  *
@@ -24,7 +27,7 @@ class UsersController extends Controller {
             $username = $_POST['username'];
             $password = $_POST['password'];
 
-            $player = \UniWars\Repositories\PlayerRepository::create()
+            $player = PlayerRepository::create()
                     ->getOneByDetails($username, $password);
 
             if (!$player) {
@@ -34,15 +37,31 @@ class UsersController extends Controller {
 
             $_SESSION['userid'] = $player->getId();
             $this->view->user = $player->getUsername();
+            $this->redirect('users', 'register');
         }
     }
 
     public function register() {
-        echo 'register calles';
+
+        $this->view->error = FALSE;
+        if (isset($_POST['register'])) {
+            $username = $_POST['username'];
+            $password = $_POST['password'];
+
+            $player = new Player($username, $password);
+
+            if (!$player->save()) {
+                $this->view->error = 'Duplicate users';
+            }
+
+            $this->login();
+        }
     }
 
-    public function test() {
-        echo 'test';
+    public function logout() {
+
+        session_destroy();
+        die();
     }
 
 }

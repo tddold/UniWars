@@ -27,4 +27,31 @@ class View {
         require_once 'Views/' . $this->controllerName . '/' . $this->actionName . '.php';
     }
 
+    public function url($controller = null, $action = null, $params = []) {
+
+        $requestUri = explode('/', $_SERVER['REQUEST_URI']);
+        $url = "//" . $_SERVER['HTTP_HOST'] . "/";
+        foreach ($requestUri as $key => $uri) {
+            if ($uri == $this->controllerName) {
+                break;
+            }
+
+            $url .= "$uri";
+        }
+
+        if ($controller) {
+            $url .= "/$controller";
+        }
+
+        if ($controller) {
+            $url .= "/$action";
+        }
+
+        foreach ($params as $key => $param) {
+            $url .= "/$key/$param";
+        }
+
+        return $url;
+    }
+
 }
