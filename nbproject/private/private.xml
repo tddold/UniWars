@@ -6,12 +6,16 @@
             <file>file:/D:/xampp/htdocs/UniWars/Configs/RoYaL/DbConfig.php</file>
             <file>file:/D:/xampp/htdocs/UniWars/Controllers/UsersController.php</file>
             <file>file:/D:/xampp/htdocs/UniWars/Configs/DbConfig.php</file>
+            <file>file:/D:/xampp/htdocs/UniWars/Controllers/GameController.php</file>
             <file>file:/D:/xampp/htdocs/UniWars/index.php</file>
+            <file>file:/D:/xampp/htdocs/UniWars/.gitignore</file>
             <file>file:/D:/xampp/htdocs/UniWars/Configs/Pesho/DbConfig.php</file>
             <file>file:/D:/xampp/htdocs/UniWars/Controllers/TestController.php</file>
             <file>file:/D:/xampp/htdocs/UniWars/Controllers/Controller.php</file>
             <file>file:/D:/xampp/htdocs/UniWars/Db.php</file>
+            <file>file:/D:/xampp/htdocs/UniWars/View.php</file>
             <file>file:/D:/xampp/htdocs/UniWars/Repositories/PlayerRepository.php</file>
+            <file>file:/D:/xampp/htdocs/UniWars/Views/users/register.php</file>
             <file>file:/D:/xampp/htdocs/UniWars/.htaccess</file>
             <file>file:/D:/xampp/htdocs/UniWars/loginFormOldWay.php</file>
             <file>file:/D:/xampp/htdocs/UniWars/Models/Player.php</file>
