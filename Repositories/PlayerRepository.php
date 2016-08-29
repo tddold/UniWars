@@ -86,8 +86,26 @@ class PlayerRepository {
             return false;
         }
 
-        return new Player($result['username'], $result['password'], $result['id']
+        $player = new Player(
+                $result['username'], $result['password'], $result['id']
         );
+
+        $this->db->query("SELECT id, name, player_id,"
+                . "FROM universities WHERE player_id =?", [$id]);
+
+        $universiriesResult = $this->db->fetchAll();
+
+        $unversities = [];
+
+        foreach ($universiriesResult as $universityResult) {
+            $unversities [] = new Uneversity(
+                    $universityResult['id'], $universityResult['name'], $player, $universityResult['money'], $universityResult['lecturues']
+            );
+        }
+        
+        $player->setUniverdities($unversities);
+
+        return $player;
     }
 
     /**

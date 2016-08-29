@@ -37,7 +37,7 @@ class UsersController extends Controller {
 
             $_SESSION['userid'] = $player->getId();
             $this->view->user = $player->getUsername();
-            $this->redirect('users', 'register');
+            $this->redirect('game');
         }
     }
 

@@ -21,6 +21,12 @@ class Player {
     private $username;
     private $password;
 
+    /**
+     *
+     * @var University[];
+     */
+    private $univerdities;
+
     public function __construct($username, $password, $id = null) {
         $this->setId($id);
         $this->setPassword($password);
@@ -73,6 +79,22 @@ class Player {
      */
     function setPassword($password) {
         $this->password = md5($password);
+    }
+
+    /**
+     * 
+     * @return University[];
+     */
+    function getUniverdities() {
+        return $this->univerdities;
+    }
+
+    /**
+     * 
+     * @param array $univerdities
+     */
+    function setUniverdities(array $univerdities) {
+        $this->univerdities = $univerdities;
     }
 
     /**

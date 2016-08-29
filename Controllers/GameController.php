@@ -8,6 +8,8 @@
 
 namespace UniWars\Controllers;
 
+use UniWars\Repositories\PlayerRepository;
+
 /**
  * Description of GameController
  *
@@ -15,18 +17,28 @@ namespace UniWars\Controllers;
  */
 class GameController extends Controller {
 
+    /**
+     *
+     * @var \Uniwars\Models\Player;
+     */
+    protected $currentPlayer = null;
+
     protected function onLoad() {
 
         if (!isset($_SESSION['userid'])) {
             $this->redirect('users', 'login');
         }
-        
+
+        if ($this->currentPlayer == NULL) {
+            $this->currentPlayer = PlayerRepository::create()
+                    ->getOne($_SESSION['userId']);
+        }
+
         session_destroy();
     }
 
     public function index() {
-        echo 'index';
-        die();
+        var_dump($this->currentPlayer->getUniverdities());
     }
 
 }
