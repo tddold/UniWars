@@ -54,4 +54,8 @@ class View {
         return $url;
     }
 
+    public function partial($name) {
+        include 'View/Partials/' . $name . ".php";
+    }
+
 }

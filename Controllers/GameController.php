@@ -38,7 +38,9 @@ class GameController extends Controller {
     }
 
     public function index() {
-        var_dump($this->currentPlayer->getUniverdities());
+        foreach ($this->currentPlayer->getUniverdities() as $university) {
+            echo $university->getName() ."<br/>:";
+        }
     }
 
 }
